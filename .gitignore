@@ -1,0 +1,6 @@
+# local-only launch material — not part of the public list
+LAUNCH_PLAYBOOK.md
+
+__pycache__/
+*.pyc
+.DS_Store
