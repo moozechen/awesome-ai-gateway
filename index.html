@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Awesome AI Gateway — interactive cost &amp; scorecard</title>
+<meta name="description" content="Interactive comparison of AI gateways and LLM model costs: reproducible token-cost benchmark (106x spread) and a compliance/security/stability scorecard. Bilingual, updated daily." />
+<meta property="og:title" content="Awesome AI Gateway — cost &amp; scorecard" />
+<meta property="og:description" content="The only AI-gateway list with a reproducible cost benchmark and a 4-axis gateway scorecard." />
+<meta property="og:image" content="assets/cost-spread.png" />
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--fg:#f0f6fc;--mut:#8b949e;--blue:#58a6ff;--green:#3fb950;--yellow:#d29922;--red:#f85149}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 80px}
+  header{border-bottom:1px solid var(--border);padding-bottom:20px;margin-bottom:24px}
+  h1{font-size:30px;margin:0 0 6px}
+  .sub{color:var(--mut);margin:0 0 14px}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;font-size:13px}
+  .pill{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 12px}
+  .tabs{display:flex;gap:8px;margin:24px 0 12px}
+  .tab{background:var(--card);border:1px solid var(--border);color:var(--fg);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:15px}
+  .tab.active{border-color:var(--blue);color:var(--blue)}
+  input[type=search]{width:100%;background:var(--card);border:1px solid var(--border);color:var(--fg);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:15px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border)}
+  th{color:var(--mut);font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+  th:hover{color:var(--fg)}
+  td.num{font-variant-numeric:tabular-nums;text-align:right}
+  tr:hover td{background:#1c2128}
+  .cheap{color:var(--green);font-weight:700}.dear{color:var(--red);font-weight:700}
+  .star{color:var(--yellow)}
+  footer{margin-top:40px;color:var(--mut);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>⚡ Awesome AI Gateway</h1>
+    <p class="sub">The only AI-gateway list with a <b>reproducible cost benchmark</b> and a <b>4-axis scorecard</b> — not just links.</p>
+    <div class="bar">
+      <span class="pill">50+ gateways scored</span>
+      <span class="pill">106× cost spread</span>
+      <span class="pill">compliance · price · security · stability</span>
+      <span class="pill">EN · 中文</span>
+      <span class="pill">updated daily</span>
+      <span class="pill"><a href="https://github.com/cuihuan/awesome-ai-gateway">★ Star on GitHub →</a></span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-view="cost">💰 Model cost</button>
+    <button class="tab" data-view="score">🛡️ Gateway scorecard</button>
+  </div>
+  <input type="search" id="q" placeholder="Filter…" />
+
+  <div id="cost-view">
+    <p class="sub">USD per task, computed from <a href="data/models.json">models.json</a> by a <a href="https://github.com/cuihuan/awesome-ai-gateway/blob/main/scripts/cost_calc.py">unit-tested script</a>. Click a header to sort.</p>
+    <table id="cost-table"><thead><tr>
+      <th data-k="model">Model</th><th data-k="provider">Provider</th>
+      <th data-k="email_usd" class="num">100K report</th>
+      <th data-k="summarize_usd" class="num">Summarize</th>
+      <th data-k="coding_usd" class="num">Coding</th>
+      <th data-k="chatbot_usd" class="num">1M chat</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+
+  <div id="score-view" class="hidden">
+    <p class="sub">Scores ★1–5 from <a href="data/gateways_scorecard.csv">gateways_scorecard.csv</a> per the <a href="https://github.com/cuihuan/awesome-ai-gateway/blob/main/BENCHMARKS.md">published rubric</a>. 🏠 = self-hosted, you own compliance.</p>
+    <table id="score-table"><thead><tr>
+      <th data-k="gateway">Gateway</th><th data-k="type">Type</th>
+      <th data-k="compliance" class="num">Compliance</th><th data-k="markup">Markup</th>
+      <th data-k="security" class="num">Security</th><th data-k="stability" class="num">Stability</th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+
+  <footer>
+    Data is CC0 and machine-readable: <a href="data/cost_table.csv">cost CSV</a> · <a href="data/gateways_scorecard.csv">scorecard CSV</a> · <a href="data/models.json">models JSON</a>.
+    Full list &amp; methodology on <a href="https://github.com/cuihuan/awesome-ai-gateway">GitHub</a>.
+  </footer>
+</div>
+
+<script>
+function parseCSV(text){
+  const rows=text.trim().split(/\r?\n/).map(line=>{
+    const out=[];let cur='',q=false;
+    for(const ch of line){
+      if(ch==='"')q=!q;else if(ch===','&&!q){out.push(cur);cur='';}else cur+=ch;
+    }
+    out.push(cur);return out;
+  });
+  const head=rows.shift();
+  return rows.map(r=>Object.fromEntries(head.map((h,i)=>[h,r[i]])));
+}
+const fmtUsd=v=>{const n=+v;return n<0.1?'$'+n.toFixed(3).replace(/0+$/,'').replace(/\.$/,''):n<100?'$'+n.toFixed(2):'$'+Math.round(n)};
+const stars=n=>{const f=Math.floor(n);return '<span class="star">'+'★'.repeat(f)+(n-f>=0.5?'½':'')+'</span> '+n.toFixed(1)};
+
+let costData=[],scoreData=[],sort={cost:{k:'chatbot_usd',asc:true},score:{k:'compliance',asc:false}};
+
+function renderCost(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const tb=document.querySelector('#cost-table tbody');
+  const s=sort.cost, rows=costData.filter(r=>(r.model+r.provider).toLowerCase().includes(q))
+    .sort((a,b)=>{const x=+a[s.k]||a[s.k],y=+b[s.k]||b[s.k];return (x>y?1:x<y?-1:0)*(s.asc?1:-1)});
+  const costs=rows.map(r=>+r.email_usd);const lo=Math.min(...costs),hi=Math.max(...costs);
+  tb.innerHTML=rows.map(r=>{
+    const cls=+r.email_usd===lo?'cheap':+r.email_usd===hi?'dear':'';
+    return `<tr><td>${r.model}</td><td>${r.provider}</td>
+      <td class="num ${cls}">${fmtUsd(r.email_usd)}</td>
+      <td class="num">${fmtUsd(r.summarize_usd)}</td>
+      <td class="num">${fmtUsd(r.coding_usd)}</td>
+      <td class="num">${fmtUsd(r.chatbot_usd)}</td></tr>`;
+  }).join('');
+}
+function renderScore(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const tb=document.querySelector('#score-table tbody');
+  const s=sort.score, rows=scoreData.filter(r=>(r.gateway+r.type).toLowerCase().includes(q))
+    .sort((a,b)=>{const x=+a[s.k]||a[s.k],y=+b[s.k]||b[s.k];return (x>y?1:x<y?-1:0)*(s.asc?1:-1)});
+  tb.innerHTML=rows.map(r=>{const home=r.self_hosted==='True'?' 🏠':'';
+    return `<tr><td>${r.gateway}</td><td>${r.type}${home}</td>
+      <td class="num">${stars(+r.compliance)}</td><td>${r.markup}</td>
+      <td class="num">${stars(+r.security)}</td><td class="num">${stars(+r.stability)}</td></tr>`;
+  }).join('');
+}
+function wireSort(tableId,view,render){
+  document.querySelectorAll('#'+tableId+' th').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k,s=sort[view];s.asc=s.k===k?!s.asc:true;s.k=k;render();
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');
+  const cost=t.dataset.view==='cost';
+  document.getElementById('cost-view').classList.toggle('hidden',!cost);
+  document.getElementById('score-view').classList.toggle('hidden',cost);
+});
+document.getElementById('q').oninput=()=>{renderCost();renderScore()};
+
+Promise.all([
+  fetch('data/cost_table.csv').then(r=>r.text()).then(parseCSV),
+  fetch('data/gateways_scorecard.csv').then(r=>r.text()).then(parseCSV)
+]).then(([c,s])=>{costData=c;scoreData=s;wireSort('cost-table','cost',renderCost);wireSort('score-table','score',renderScore);renderCost();renderScore()})
+ .catch(e=>{document.querySelector('.wrap').insertAdjacentHTML('beforeend','<p class="sub">Data loads on GitHub Pages. View the <a href=\"https://github.com/cuihuan/awesome-ai-gateway\">repo</a>.</p>')});
+</script>
+</body>
+</html>
