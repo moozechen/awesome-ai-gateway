@@ -27,6 +27,8 @@
 
 > The same task can cost **100× more** depending on the model behind your gateway. An **AI gateway** sits between your code and LLM providers — one endpoint, one key, many models — handling routing, failover, caching, rate limits, cost tracking and guardrails so you change a `base_url` instead of rewriting your app. This list helps you pick the right one, then the [evaluation set](BENCHMARKS.md) shows you which model to route to.
 
+⭐ **Found this useful? [Star it](https://github.com/cuihuan/awesome-ai-gateway)** — that's how the next engineer choosing a gateway finds it. CC0, no signup, no tracking, no vendor money.
+
 ## Contents
 
 - [📊 Evaluation set: model benchmarks · token cost · gateway scorecard](BENCHMARKS.md)
