@@ -6,8 +6,12 @@
 
 An **AI gateway** sits between your code and LLM providers: one endpoint, one key, many models. It handles routing, failover, caching, rate limits, cost tracking and guardrails — so you change a `base_url` instead of rewriting your app for every provider.
 
+> ### 📊 New: [**Evaluation Set →**](BENCHMARKS.md)
+> Not just a link list — a sourced, reproducible evaluation layer: **model benchmarks** (AA Index, GPQA, SWE-bench, Arena), **real-world token cost** computed by a [unit-tested script](scripts/cost_calc.py) (writing a 100K-token report costs **$0.03 on DeepSeek vs $3.01 on GPT-5.5** — a 106× spread), and a **gateway scorecard** rating compliance · price · security · stability. [Read it →](BENCHMARKS.md)
+
 ## Contents
 
+- [📊 Evaluation set: model benchmarks · token cost · gateway scorecard](BENCHMARKS.md)
 - [Which gateway should I use? (decision tree)](#which-gateway-should-i-use)
 - [Quick comparison](#quick-comparison)
 - [💰 Cost-first: cheapest multi-model access](#-cost-first-cheapest-multi-model-access)

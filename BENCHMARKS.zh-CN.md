@@ -1,0 +1,260 @@
+<!-- 本文件的成本表由 scripts/cost_calc.py 从 data/models.json 生成，请勿手改 COST 标记之间的内容。 -->
+# AI 网关与模型评测集 📊
+
+> 为 [Awesome AI Gateway](README.zh-CN.md) 提供一层专业、可复现的评测：网关背后的**模型**到底有多强、在具体任务上**真实花多少钱**，以及**网关本身**在合规/价格/安全/稳定性四个维度的评分。
+>
+> **语言：** [English](BENCHMARKS.md) · 简体中文 · 最近审阅见页脚
+
+这里每个数字都**标注来源与日期**。成本单元格由一个带单测的脚本（[`scripts/cost_calc.py`](scripts/cost_calc.py)）从公开价格表**计算**得出，绝非手填——重跑一遍结果一致。模型分数摘自一手榜单并附链接。网关评分遵循下方公开的[评分标准](#评分标准统一执行)。
+
+## 目录
+
+- [第一部分 — 权威模型基准](#第一部分--权威模型基准)
+- [第二部分 — 按场景选模型](#第二部分--按场景选模型)
+- [第三部分 — 真实 Token 成本实测（脚本计算）](#第三部分--真实-token-成本实测脚本计算)
+- [第四部分 — 网关四维评分：合规·价格·安全·稳定](#第四部分--网关四维评分合规价格安全稳定)
+- [方法论与注意事项](#方法论与注意事项)
+- [数据来源](#数据来源)
+
+---
+
+## 第一部分 — 权威模型基准
+
+模型有多强？以下是审阅日最被引用的公开基准。**务必结合[注意事项](#方法论与注意事项)阅读**——榜单会被刷分和数据污染，请与人类盲评（Arena）和下面的真实成本表交叉验证。
+
+按 **Artificial Analysis 智能指数**（最常被引用的综合分）排序。`♦` = GPQA Diamond。`—` = 审阅时未核实。
+
+| # | 模型 | 厂商 | 权重 | 上下文 | GPQA♦ | SWE-bench Verified | AIME | Arena Elo | AA 指数 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | **Claude Fable 5** | Anthropic | 闭源 | 1M | 95.0% | 95.0% | — | —ᵗ | **65** 🥇 |
+| 2 | **Claude Opus 4.8** | Anthropic | 闭源 | 1M | 93.6% | 88.6% | — | —ᵗ | **61.4** |
+| 3 | **GPT-5.5** | OpenAI | 闭源 | ~400K | 93.6% | 88.7% | — | 1402ᵗ | **60.2** |
+| 4 | **Gemini 3.1 Pro** | Google | 闭源 | 1M | 94.3% | 80.6% | 98.2%¹ | 1406 | **57.2** |
+| 5 | **Qwen3.7 Max** | 阿里 | 闭源 | 1M | 92.4% | — | 75%² | — | **56.6** |
+| 6 | **Gemini 3.5 Flash** | Google | 闭源 | 1M | — | — | — | — | **55.3** |
+| 7 | **Kimi K2.6** | 月之暗面 | 🔓 开源 | 256K | 90.5% | 80.2% | 96.4%¹ | — | **53.9** |
+| 8 | **Grok 4.3** | xAI | 闭源 | 1M | ~89%³ | ~75%³ | ~95%³ | — | **53.2** |
+| 9 | **Muse Spark** | Meta | 🔓 开源 | 262K | — | — | — | — | **52.1** |
+| 10 | **DeepSeek V4 Pro** | 深度求索 | 🔓 开源·MIT | 1M | 90.1% | 80.6% | 89.3%² | — | **51.5** |
+| 11 | **GLM-5.1** | 智谱 Z.ai | 🔓 开源 | 200K | 86.2% | — | 95.3%¹ | — | **51.4** |
+| 12 | **Claude Haiku 4.5** | Anthropic | 闭源 | 200K | — | 73.3% | — | — | — |
+| 13 | **Mistral Large 3** | Mistral | 🔓 开源 | 256K | 43.9% | — | — | — | **22.8** |
+
+ᵗ Arena Elo 为更早的 GPT-5.2 快照；2026 年 5 月后发布的模型（Fable 5、Opus 4.8、GPT-5.5）在 Arena 上尚未稳定——能力与人类偏好排名会脱节，没有数字不代表弱。
+¹ AIME 2026 · ² AIME 2025（不同年份、"带工具/不带工具"变体**不可直接比较**）· ³ Grok 4.3 数据由 Grok 4 外推——近似值。
+
+> 🛡️ **抗污染交叉验证。** 在更难刷分的 **SWE-bench Pro** 上：Fable 5 **80.3%** 🥇 · Opus 4.8 69.2% · GPT-5.5 / Kimi K2.6 ~58.6% · GLM-5.1 58.4%。在 **Humanity's Last Exam** 上：Fable 5 ~59% · Gemini 3.1 Pro 44.4%。前沿模型在 GPQA 上已挤在 90–95%——这个天花板下 1–2 分的差距属于噪声。
+
+**各列含义**
+- **GPQA Diamond** — 研究生级科学题，设计上"搜不到答案"。
+- **SWE-bench Verified** — 修复真实 GitHub issue；最具代表性的*智能体编码*分。
+- **AIME** — 竞赛数学（精确答案、推理抗压）。
+- **Arena Elo** — [Arena（原 LMArena）](https://arena.ai/leaderboard) 上的盲测人类偏好；最难刷的指标。
+- **AA 指数** — [Artificial Analysis](https://artificialanalysis.ai) 智能指数，跨智能体/编码/推理/知识的综合分。
+
+---
+
+## 第二部分 — 按场景选模型
+
+基准衡量的是抽象能力，但大多数团队只有一个具体任务。下表把常见任务映射到*能力之选*和*性价比之选*（够用、便宜得多）。价格请对照[第三部分](#第三部分--真实-token-成本实测脚本计算)。
+
+| 你的任务 | 🏆 能力之选 | 💸 性价比之选（够用又便宜） | 原因 |
+|---|---|---|---|
+| **智能体编码**（SWE-bench） | Claude Fable 5 / Opus 4.8 | Kimi K2.6 · DeepSeek V4 Pro | 开源模型以零头成本达到 ~80% SWE-bench Verified |
+| **长上下文 / RAG**（10 万+） | Gemini 3.1 Pro（1M 上下文） | DeepSeek V4-Flash（1M 上下文） | 输入密集任务的成本地板；注意 Gemini >20 万的加价 |
+| **硬核推理 / 数学** | Gemini 3.1 Pro（98.2 AIME'26） | GLM-5.1 · Kimi K2.6 | 开源模型 AIME 已达 95%+——数学是最被"平民化"的前沿能力 |
+| **批量生成**（邮件、内容） | Claude Haiku 4.5 | DeepSeek V4-Flash · GPT-5.4 nano | 输出密集→输出价格主导，见 [3.1](#31-写一封-10-万-token-的报告输出密集) |
+| **最便宜的可用对话** | GPT-5.4 nano | DeepSeek V4-Flash | 百万 token 月成本约 $0.21，GPT-5.5 要 $17.50 |
+| **开放式对话**（人类偏好） | Gemini 3.1 Pro（Arena 1406）· GPT-5.5 | — | Arena Elo 是最贴合"用着舒服"的指标 |
+| **私有化 / 数据主权** | DeepSeek V4 Pro（MIT）· GLM-5.1 | Kimi K2.6 | 开源权重可跑在自己 VPC 内——零数据出境 |
+| **强合规企业** | Claude Opus 4.8 / GPT-5.5 经 Azure / Bedrock / Vertex | — | 让旗舰模型走[原厂云](#第四部分--网关四维评分合规价格安全稳定)，拿 HIPAA/FedRAMP |
+
+> **网关**正是让你无需改代码就能落地上表的东西：把能力之选设为主、性价比之选设为兜底，或按任务逐请求路由。这就是这份[清单](README.zh-CN.md)的意义。
+
+---
+
+## 第三部分 — 真实 Token 成本实测（脚本计算）
+
+> "基准告诉你哪个*最强*，账单告诉你哪个*用得起*。" 下面四个具体任务的成本，由 [`scripts/cost_calc.py`](scripts/cost_calc.py) 从 [`data/models.json`](data/models.json) 的价格计算得出。价格单位为美元/百万 token；推理模型的隐藏思考 token 按输出价计费。
+
+### 3.1 写一封 10 万 token 的报告（输出密集）
+
+<!-- COST:email:START -->
+**写一封 10 万 token 的报告** (输入 2,000 tok · 输出 100,000 tok)
+
+| # | 模型 | 厂商 | 成本 |
+|---|---|---|---|
+| 1 | DeepSeek V4-Flash | DeepSeek | $0.028 |
+| 2 | GPT-5.4 nano | OpenAI | $0.13 |
+| 3 | Mistral Large 3 | Mistral | $0.15 |
+| 4 | Kimi K2.6 | Moonshot | $0.40 |
+| 5 | GLM-5.1 | Z.ai (Zhipu) | $0.44 |
+| 6 | Claude Haiku 4.5 | Anthropic | $0.50 |
+| 7 | Gemini 3.5 Flash | Google | $0.90 |
+| 8 | Gemini 3.1 Pro | Google | $1.20 |
+| 9 | Grok 4 | xAI | $1.51 |
+| 10 | Claude Opus 4.8 | Anthropic | $2.51 |
+| 11 | GPT-5.5 | OpenAI | $3.01 |
+
+> 📊 最便宜的比最贵的低约 **106×**。
+<!-- COST:email:END -->
+
+### 3.2 总结一份 10 万 token 的文档（输入密集）
+
+<!-- COST:summarize:START -->
+**总结一份 10 万 token 的文档** (输入 100,000 tok · 输出 2,000 tok)
+
+| # | 模型 | 厂商 | 成本 |
+|---|---|---|---|
+| 1 | DeepSeek V4-Flash | DeepSeek | $0.015 |
+| 2 | GPT-5.4 nano | OpenAI | $0.023 |
+| 3 | Mistral Large 3 | Mistral | $0.053 |
+| 4 | Kimi K2.6 | Moonshot | $0.10 |
+| 5 | Claude Haiku 4.5 | Anthropic | $0.11 |
+| 6 | GLM-5.1 | Z.ai (Zhipu) | $0.15 |
+| 7 | Gemini 3.5 Flash | Google | $0.17 |
+| 8 | Gemini 3.1 Pro | Google | $0.22 |
+| 9 | Grok 4 | xAI | $0.33 |
+| 10 | Claude Opus 4.8 | Anthropic | $0.55 |
+| 11 | GPT-5.5 | OpenAI | $0.56 |
+
+> 📊 最便宜的比最贵的低约 **38×**。
+<!-- COST:summarize:END -->
+
+### 3.3 编码 Agent 会话（混合 + 推理 token）
+
+<!-- COST:coding:START -->
+**编码 Agent 会话** (输入 50,000 tok · 输出 20,000 tok · 推理模型另计 30,000 思考 token)
+
+| # | 模型 | 厂商 | 成本 |
+|---|---|---|---|
+| 1 | DeepSeek V4-Flash | DeepSeek | $0.021 |
+| 2 | Mistral Large 3 | Mistral | $0.055 |
+| 3 | GPT-5.4 nano | OpenAI | $0.073 |
+| 4 | Kimi K2.6 | Moonshot | $0.13 |
+| 5 | Claude Haiku 4.5 | Anthropic | $0.15 |
+| 6 | GLM-5.1 | Z.ai (Zhipu) | $0.29 |
+| 7 | Gemini 3.5 Flash | Google | $0.53 |
+| 8 | Gemini 3.1 Pro | Google | $0.70 |
+| 9 | Grok 4 | xAI | $0.90 |
+| 10 | Claude Opus 4.8 | Anthropic | $1.50 |
+| 11 | GPT-5.5 | OpenAI | $1.75 |
+
+> 📊 最便宜的比最贵的低约 **83×**。
+<!-- COST:coding:END -->
+
+### 3.4 百万 token 的聊天机器人月度（均衡）
+
+<!-- COST:chatbot:START -->
+**百万 token 聊天机器人月度** (输入 500,000 tok · 输出 500,000 tok)
+
+| # | 模型 | 厂商 | 成本 |
+|---|---|---|---|
+| 1 | DeepSeek V4-Flash | DeepSeek | $0.21 |
+| 2 | GPT-5.4 nano | OpenAI | $0.72 |
+| 3 | Mistral Large 3 | Mistral | $1.00 |
+| 4 | Kimi K2.6 | Moonshot | $2.48 |
+| 5 | GLM-5.1 | Z.ai (Zhipu) | $2.90 |
+| 6 | Claude Haiku 4.5 | Anthropic | $3.00 |
+| 7 | Gemini 3.5 Flash | Google | $5.25 |
+| 8 | Gemini 3.1 Pro | Google | $7.00 |
+| 9 | Grok 4 | xAI | $9.00 |
+| 10 | Claude Opus 4.8 | Anthropic | $15.00 |
+| 11 | GPT-5.5 | OpenAI | $17.50 |
+
+> 📊 最便宜的比最贵的低约 **83×**。
+<!-- COST:chatbot:END -->
+
+**买网关前必须知道的计价陷阱**
+1. **推理 token 按输出计费。** 一旦模型"思考"了 3 万 token，"便宜"的推理模型可能比旗舰还贵。上面的编码表已计入。
+2. **缓存输入便宜 5–10 倍。** 复用长系统提示？真实成本看的是缓存输入价，不是标价输入价。
+3. **批处理 API 约 5 折**（Anthropic、OpenAI、Google 都有），适合非交互任务。
+4. **国产模型以人民币计价**，常有错峰折扣（DeepSeek）——这里的美元数字是换算值，会随汇率浮动。
+
+---
+
+## 第四部分 — 网关四维评分：合规·价格·安全·稳定
+
+这才是买家真正睡不着觉的部分。模型可以随时换，但网关是你的 Key、Prompt 和审计日志所在之处。每个网关按下方标准在四个维度上打 ★1–5 分，让评分可比，而非拍脑袋。
+
+### 评分标准（统一执行）
+
+| ★ | 合规 | 安全 | 稳定 / 可靠 |
+|---|---|---|---|
+| ★5 | SOC 2 Type II **+** ISO 27001 **+** HIPAA BAA **+** 欧盟数据驻留 **+** ZDR | 护栏 + PII 脱敏 + RBAC + SSO/SAML + 审计日志 + 密钥保险箱 | 公开 SLA ≥99.9%、状态页、多厂商故障转移、亚毫秒开销 |
+| ★4 | SOC 2 + {ISO/HIPAA/驻留} 之一 + ZDR 选项 | 上述大部分，缺一项企业级控制 | 有 SLA 或强故障转移 + 维护健康 |
+| ★3 | SOC 2 **或** GDPR 姿态，可申请 ZDR | RBAC + 审计日志 + 密钥加密 | 有故障转移、活跃发版、无公开 SLA |
+| ★2 | 仅隐私政策，无第三方审计 | 基础鉴权 + 密钥存储，控制少 | 尽力而为，社区维护 |
+| ★1 | 无 | 已知未修漏洞 / 控制极少 | 维护零星或未经验证 |
+| 🏠 | *自托管：这些**你**自己扛。评分反映软件给你多少可用于合规的控制能力。* | | |
+
+**Markup（加价）** = 网关在厂商 token 成本之上多收的部分。自托管 = $0 加价，但你付基础设施 + 运维。
+
+#### 托管型多厂商网关
+
+| 网关 | 合规 | 加价 | 安全 | 稳定 | 一句话 |
+|---|---|---|---|---|---|
+| **Cloudflare AI Gateway** | ★★★★½ | **0%** | ★★★★ | ★★★★½ | CF 持 SOC 2 II / ISO 27001 / PCI；免费 DLP + 故障转移；Business+ 100% SLA |
+| **Portkey**（云） | ★★★★½ | 按量 | ★★★★½ | ★★★★ | SOC 2 II + ISO + HIPAA；50+ 护栏市场、RBAC/SSO；99.99% SLA |
+| **Vercel AI Gateway** | ★★★★ | **0%** | ★★★½ | ★★★★ | SOC 2 II + 99.99% SLA（企业版）；BYOK 也真 0 加价 |
+| **Helicone**（云） | ★★★½ | **0%** 直通 | ★★★½ | ★★★ | SOC 2 + HIPAA（Team）；PII 检测；开源内核 → 可 VPC/自托管 |
+| **Requesty** | ★★★½ | ~5% | ★★★½ | ★★★ | 欧盟驻留 + PII 脱敏 + ZDR；SOC 2"2026 Q2 进行中"（尚非 Type II） |
+| **OpenRouter** | ★★★½ | ~5.5% 充值费 | ★★★ | ★★★ | 60+ 厂商、自动故障转移、免费 ZDR；**无公开 SLA**（仅企业版） |
+| **Eden AI** | ★★★½ | ~5.5% 平台费 | ★★★ | ★★★½ | 法国公司、欧盟默认驻留、GDPR 优先；SOC 2 未核实 |
+| **Martian** | ★★★ | 按量（未公开） | ★★★½ | ★★★ | "Airlock"合规审查 + 成本路由；认证细节未核实 |
+
+#### 原厂云（单厂商，认证最强）
+
+| 网关 | 合规 | 加价 | 安全 | 稳定 | 一句话 |
+|---|---|---|---|---|---|
+| **Azure OpenAI** | ★★★★★ | 无 | ★★★★★ | ★★★★½ | SOC 2 / ISO / HIPAA-BAA / **FedRAMP High**，区域锁定，ZDR 端点 |
+| **AWS Bedrock** | ★★★★★ | 无 | ★★★★★ | ★★★★½ | ISO / SOC / CSA STAR / HIPAA / FedRAMP High；Bedrock 内多模型 |
+| **Google Vertex AI** | ★★★★½ | 无 | ★★★★★ | ★★★★½ | 首个达 FedRAMP High 的 GenAI 平台（2025）；SOC 2 / ISO / HIPAA |
+| **OpenAI**（直连） | ★★★★ | 无 | ★★★★ | ★★★★ | SOC 2 II、HIPAA-BAA、ZDR；但单厂商=无跨厂商故障转移 |
+
+> ⚠️ 原厂云合规最强，但**扛不住厂商自己宕机**——在它们前面架一个网关，买的正是这份跨厂商故障转移。
+
+#### 开源自托管（🏠 合规自己扛；$0 加价，自付基础设施）
+
+| 网关 | 合规 | 安全 | 稳定 | 一句话 |
+|---|---|---|---|---|
+| **Portkey Gateway**（开源） | ★★★🏠 | ★★★★ | ★★★★ | Apache-2.0；完整护栏、MCP OAuth、故障转移免费；<1ms 开销 |
+| **Kong AI Gateway** | ★★★½ | ★★★★½ | ★★★★ | PII 脱敏（20+ 类）、Prompt Guard、RBAC，基于成熟 Kong 血统 |
+| **Envoy AI Gateway** | ★★★🏠 | ★★★★ | ★★★★ | 多厂商 + MCP 网关（OAuth+CEL 鉴权）；原生 K8s/Istio |
+| **Bifrost**（Maxim） | ★★★🏠 | ★★★½ | ★★★★½ | Go；~11µs 开销基准、集群模式；无已知 CVE |
+| **TensorZero** | ★★★🏠 | ★★★ | ★★★★ | Rust；万级 QPS 下 <1ms p99；路由 + 内置可观测 |
+| **Higress** | ★★★🏠 | ★★★½ | ★★★★ | Istio/Envoy AI 原生、Wasm 插件、控制台；阿里背书 |
+| **Apache APISIX** | ★★★🏠 | ★★★ | ★★★★ | 成熟 ASF 网关上的 ai-proxy / ai-prompt-guard 插件 |
+| **LiteLLM** | ★★★🏠 | ★★½ ⚠️ | ★★★★ | SOC 2 I + ISO（企业版）；**升到 ≥v1.83.7**——2 个严重 2026 CVE（含 1 个 CISA KEV 上的 RCE），均已修 |
+| **GPT-Load** | ★★🏠 | ★★½ | ★★★½ | Go 密钥池轮询 + 加密密钥存储 + 双重鉴权；仅代理层 |
+| **new-api** | ★★🏠 | ★½ ⚠️ | ★★★ | ~38k★ 且活跃，但 **2026 年一串 CVE**（IDOR/SSRF/SQLi）——隔离 + 尽快打补丁 |
+| **one-api** | ★★🏠 | ★★ | ★★½ | MIT 元祖；维护放缓——new-api 是更活跃的继任者 |
+
+> ⚠️ **CVE 诚实披露。** 越流行的开源网关越是攻击目标。LiteLLM（预鉴权 SQLi + 未鉴权 RCE）和 new-api（IDOR/SSRF/SQLi）2026 年都有严重通告——*已修复*，但教训是：锁定到最新 stable、限制出站、别把管理后台暴露到公网。没发现 CVE（Bifrost、TensorZero、Higress、Envoy、GPT-Load）≠ 已证明安全，也可能只是关注度低。
+
+---
+
+## 方法论与注意事项
+
+- **基准是必要但不充分的。** 公开测试集会泄漏进训练数据（污染），厂商也会针对榜单优化。因此我们同时展示*多个*基准 + 盲测人类偏好（Arena）+ 真实成本，不单独依赖任何一个。
+- **"Verified"很重要。** 我们优先用 SWE-bench **Verified** 而非原始集，优先用官方模型卡 / [Artificial Analysis](https://artificialanalysis.ai) 独立测试而非厂商通稿。厂商自报数据会标注。
+- **成本 ≠ 标价。** 每 token 标价掩盖了推理 token 膨胀、缓存输入折扣和批处理价。第三部分计的是*任务*成本而非 token，脚本开放，你可代入自己的 token 配比。
+- **网关评分是时点估计**，来自公开信任页、状态页和文档。认证会失效也会新增；签约前请核实。欢迎通过 PR 纠错——见 [CONTRIBUTING](CONTRIBUTING.md)。
+- **无利益关联。** 本清单不收任何被列厂商的钱。自托管与商业方案按同一标准评分。
+
+## 数据来源
+
+一手榜单与价格参考（请实时核对——它们每周都在变）：
+- [Arena（原 LMArena）](https://arena.ai/leaderboard) — 盲测人类偏好 Elo
+- [Artificial Analysis](https://artificialanalysis.ai) — 智能指数、价格与速度
+- [SWE-bench](https://www.swebench.com) — 智能体编码榜
+- [Vellum LLM 榜](https://www.vellum.ai/llm-leaderboard)、[OpenRouter 排名](https://openrouter.ai/rankings)
+- 官方价格：[Anthropic](https://www.anthropic.com/pricing)、[OpenAI](https://openai.com/api/pricing/)、[Google](https://ai.google.dev/gemini-api/docs/pricing)、[DeepSeek](https://api-docs.deepseek.com/quick_start/pricing)
+
+逐格来源见 [`data/models.json`](data/models.json) 与 [`data/gateways_eval.json`](data/gateways_eval.json)。
+
+---
+
+*作为 [Awesome AI Gateway](README.zh-CN.md) 的一部分维护。模型分数与价格变化很快；本评测集按公开节奏审阅，每个数字都在其来源处标注日期。*
+
+**最近审阅：2026-06-12** · 基准与价格快照见 [`data/models.json`](data/models.json)，网关评分见 [`data/gateways_eval.json`](data/gateways_eval.json)。

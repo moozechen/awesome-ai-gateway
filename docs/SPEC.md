@@ -28,7 +28,19 @@ then listing in `sindresorhus/awesome` (eligible after day 30).
 | `scripts/update_readme.py` | Stdlib-only updater: refreshes star markers in both READMEs and rewrites the block between `<!-- RELEASES:START -->` / `<!-- RELEASES:END -->`. |
 | `scripts/test_update_readme.py` | Unit tests for all pure functions of the updater (required by project rule: interfaces ship with tests). |
 | `.github/workflows/daily-update.yml` | Daily cron (02:23 UTC); commits only when content changed. |
-| `.github/workflows/ci.yml` | Unit tests (blocking) + awesome-lint (advisory). |
+| `.github/workflows/ci.yml` | Unit tests (blocking) + cost-table freshness check (blocking) + awesome-lint (advisory). |
+
+### Evaluation set (体现专业度)
+
+| Path | Purpose |
+|---|---|
+| `BENCHMARKS.md` / `BENCHMARKS.zh-CN.md` | The evaluation hub: model benchmarks, scenario picks, computed token cost, gateway scorecard. Cost cells live between `<!-- COST:<id>:START/END -->` markers. |
+| `data/models.json` | Source of truth for model pricing (drives cost tables) + a dated benchmark snapshot. `scenario_cost: true` flags the representative cost set; `reasoning: true` bills thinking tokens as output. |
+| `data/gateways_eval.json` | Gateway scorecard snapshot (★1–5 on compliance/security/stability + markup), per the rubric in BENCHMARKS.md. |
+| `scripts/cost_calc.py` | Recomputes every cost cell from `models.json` and rewrites the COST blocks in both docs (EN/zh localized). No cost number is ever hand-typed. |
+| `scripts/test_cost_calc.py` | Unit tests for the cost engine (required by project rule). |
+
+**Evaluation principles:** every figure is sourced + dated; costs are *computed and reproducible*, not asserted; benchmarks pair static scores with human-preference + contamination-resistant sets; gateway scores follow a published rubric; CVEs are disclosed honestly (credibility > marketing).
 
 ## Update cadence
 
