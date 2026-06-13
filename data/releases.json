@@ -1,57 +1,71 @@
 {
-  "generated_at": "2026-06-12T03:36:30Z",
+  "generated_at": "2026-06-13T03:36:08Z",
   "stars": {
-    "BerriAI/litellm": 50097,
-    "QuantumNous/new-api": 38403,
-    "songquanpeng/one-api": 34857,
-    "Kong/kong": 43566,
-    "apache/apisix": 16713,
-    "Portkey-AI/gateway": 12041,
-    "tensorzero/tensorzero": 11460,
-    "higress-group/higress": 8620,
+    "BerriAI/litellm": 50204,
+    "QuantumNous/new-api": 38550,
+    "songquanpeng/one-api": 34887,
+    "Kong/kong": 43580,
+    "apache/apisix": 16720,
+    "Portkey-AI/gateway": 12049,
+    "tensorzero/tensorzero": 11461,
+    "higress-group/higress": 8636,
     "tbphp/gpt-load": 6221,
-    "maximhq/bifrost": 5683,
-    "Helicone/helicone": 5805,
-    "envoyproxy/ai-gateway": 1742,
-    "Helicone/ai-gateway": 600,
-    "katanemo/plano": 6584,
-    "theopenco/llmgateway": 1292,
-    "APIParkLab/APIPark": 1751,
+    "maximhq/bifrost": 5717,
+    "Helicone/helicone": 5810,
+    "envoyproxy/ai-gateway": 1747,
+    "Helicone/ai-gateway": 601,
+    "katanemo/plano": 6585,
+    "theopenco/llmgateway": 1293,
+    "APIParkLab/APIPark": 1752,
     "pydantic/pydantic-ai-gateway": 189,
-    "algorithmicsuperintelligence/optillm": 4141,
-    "andrewyng/aisuite": 13809,
+    "algorithmicsuperintelligence/optillm": 4142,
+    "andrewyng/aisuite": 13948,
     "bricks-cloud/BricksLLM": 1210,
     "EinStack/glide": 160,
-    "kgateway-dev/kgateway": 5559,
+    "kgateway-dev/kgateway": 5560,
     "TheLunarCompany/lunar": 454,
-    "MartialBE/one-hub": 2841,
-    "fruitbars/simple-one-api": 2312,
-    "Veloera/Veloera": 1630,
-    "yym68686/uni-api": 1228,
-    "lm-sys/RouteLLM": 5011,
+    "MartialBE/one-hub": 2843,
+    "fruitbars/simple-one-api": 2313,
+    "Veloera/Veloera": 1631,
+    "yym68686/uni-api": 1227,
+    "lm-sys/RouteLLM": 5014,
     "vllora/vllora": 802,
     "braintrustdata/braintrust-proxy": 398,
-    "mlflow/mlflow": 26449,
-    "agentgateway/agentgateway": 3232,
+    "mlflow/mlflow": 26480,
+    "agentgateway/agentgateway": 3253,
     "kubernetes-sigs/gateway-api-inference-extension": 690,
-    "vllm-project/aibrix": 4869,
-    "llm-d/llm-d": 3346,
+    "vllm-project/aibrix": 4873,
+    "llm-d/llm-d": 3349,
     "inference-gateway/inference-gateway": 124
   },
   "releases": [
+    {
+      "repo": "yym68686/uni-api",
+      "tag": "v1.7.126",
+      "name": "Release 1.7.126",
+      "published_at": "2026-06-12T20:53:14Z",
+      "url": "https://github.com/yym68686/uni-api/releases/tag/v1.7.126"
+    },
+    {
+      "repo": "kgateway-dev/kgateway",
+      "tag": "v2.3.3",
+      "name": "v2.3.3",
+      "published_at": "2026-06-12T20:12:53Z",
+      "url": "https://github.com/kgateway-dev/kgateway/releases/tag/v2.3.3"
+    },
+    {
+      "repo": "maximhq/bifrost",
+      "tag": "transports/v1.5.13",
+      "name": "Bifrost HTTP v1.5.13",
+      "published_at": "2026-06-12T18:05:17Z",
+      "url": "https://github.com/maximhq/bifrost/releases/tag/transports/v1.5.13"
+    },
     {
       "repo": "andrewyng/aisuite",
       "tag": "app-v0.1.1",
       "name": "OpenCoworker 0.1.1",
       "published_at": "2026-06-11T22:46:31Z",
       "url": "https://github.com/andrewyng/aisuite/releases/tag/app-v0.1.1"
-    },
-    {
-      "repo": "yym68686/uni-api",
-      "tag": "v1.7.115",
-      "name": "Release 1.7.115",
-      "published_at": "2026-06-11T19:24:28Z",
-      "url": "https://github.com/yym68686/uni-api/releases/tag/v1.7.115"
     },
     {
       "repo": "katanemo/plano",
@@ -68,25 +82,11 @@
       "url": "https://github.com/BerriAI/litellm/releases/tag/v1.88.1"
     },
     {
-      "repo": "maximhq/bifrost",
-      "tag": "ent-v1.4.8-base",
-      "name": "Enterprise v1.4.8 base",
-      "published_at": "2026-06-08T11:41:40Z",
-      "url": "https://github.com/maximhq/bifrost/releases/tag/ent-v1.4.8-base"
-    },
-    {
       "repo": "envoyproxy/ai-gateway",
       "tag": "v0.7.0",
       "name": "v0.7.0",
       "published_at": "2026-06-06T20:59:58Z",
       "url": "https://github.com/envoyproxy/ai-gateway/releases/tag/v0.7.0"
-    },
-    {
-      "repo": "kgateway-dev/kgateway",
-      "tag": "v2.3.2",
-      "name": "v2.3.2",
-      "published_at": "2026-06-04T17:16:42Z",
-      "url": "https://github.com/kgateway-dev/kgateway/releases/tag/v2.3.2"
     },
     {
       "repo": "tensorzero/tensorzero",
@@ -132,10 +132,10 @@
     },
     {
       "repo": "agentgateway/agentgateway",
-      "tag": "v1.3.0-alpha.1",
-      "name": "v1.3.0-alpha.1",
-      "published_at": "2026-05-23T04:36:14Z",
-      "url": "https://github.com/agentgateway/agentgateway/releases/tag/v1.3.0-alpha.1"
+      "tag": "v1.2.1",
+      "name": "v1.2.1",
+      "published_at": "2026-05-15T17:59:45Z",
+      "url": "https://github.com/agentgateway/agentgateway/releases/tag/v1.2.1"
     },
     {
       "repo": "llm-d/llm-d",
