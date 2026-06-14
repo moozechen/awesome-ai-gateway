@@ -114,13 +114,13 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 
 | Project | Type | Stars | License | Multi-provider | Fallback / LB | Caching | Guardrails | Cost tracking |
 |---|---|---|---|---|---|---|---|---|
-| [LiteLLM](https://github.com/BerriAI/litellm) | OSS proxy + SDK | <!--s:BerriAI/litellm-->⭐ 50.2k<!--/s--> | MIT¹ | ✅ 100+ | ✅ | ✅ | ✅ | ✅ |
-| [new-api](https://github.com/QuantumNous/new-api) | OSS relay/billing | <!--s:QuantumNous/new-api-->⭐ 38.5k<!--/s--> | AGPL-3.0 | ✅ | ✅ | ➕ | ➕ | ✅ |
+| [LiteLLM](https://github.com/BerriAI/litellm) | OSS proxy + SDK | <!--s:BerriAI/litellm-->⭐ 50.3k<!--/s--> | MIT¹ | ✅ 100+ | ✅ | ✅ | ✅ | ✅ |
+| [new-api](https://github.com/QuantumNous/new-api) | OSS relay/billing | <!--s:QuantumNous/new-api-->⭐ 38.7k<!--/s--> | AGPL-3.0 | ✅ | ✅ | ➕ | ➕ | ✅ |
 | [one-api](https://github.com/songquanpeng/one-api) | OSS relay/billing | <!--s:songquanpeng/one-api-->⭐ 34.9k<!--/s--> | MIT | ✅ | ✅ | ❌ | ❌ | ✅ |
 | [Kong AI Gateway](https://github.com/Kong/kong) | OSS API gateway | <!--s:Kong/kong-->⭐ 43.6k<!--/s--> | Apache-2.0 | ✅ | ✅ | ✅ semantic | ✅ | ✅ |
 | [Apache APISIX](https://github.com/apache/apisix) | OSS API gateway | <!--s:apache/apisix-->⭐ 16.7k<!--/s--> | Apache-2.0 | ✅ | ✅ | ➕ | ➕ | ➕ |
-| [Portkey Gateway](https://github.com/Portkey-AI/gateway) | OSS gateway + SaaS | <!--s:Portkey-AI/gateway-->⭐ 12k<!--/s--> | MIT | ✅ 1600+ | ✅ | ✅ | ✅ 50+ | ➕ SaaS |
-| [TensorZero](https://github.com/tensorzero/tensorzero) | OSS LLMOps stack | <!--s:tensorzero/tensorzero-->⭐ 11.5k<!--/s--> | Apache-2.0 | ✅ | ✅ | ✅ | ➕ | ✅ |
+| [Portkey Gateway](https://github.com/Portkey-AI/gateway) | OSS gateway + SaaS | <!--s:Portkey-AI/gateway-->⭐ 12.1k<!--/s--> | MIT | ✅ 1600+ | ✅ | ✅ | ✅ 50+ | ➕ SaaS |
+| [TensorZero](https://github.com/tensorzero/tensorzero) | OSS LLMOps stack | <!--s:tensorzero/tensorzero-->⭐ 11.6k<!--/s--> | Apache-2.0 | ✅ | ✅ | ✅ | ➕ | ✅ |
 | [Higress](https://github.com/higress-group/higress) | OSS AI-native gateway | <!--s:higress-group/higress-->⭐ 8.6k<!--/s--> | Apache-2.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
 | [GPT-Load](https://github.com/tbphp/gpt-load) | OSS key-pool proxy | <!--s:tbphp/gpt-load-->⭐ 6.2k<!--/s--> | MIT | ✅ | ✅ key rotation | ❌ | ❌ | ➕ |
 | [Bifrost](https://github.com/maximhq/bifrost) | OSS gateway (Go) | <!--s:maximhq/bifrost-->⭐ 5.7k<!--/s--> | Apache-2.0 | ✅ | ✅ adaptive | ✅ | ✅ | ✅ |
@@ -152,9 +152,9 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 
 *Pain point: "My keys, my infra, no per-token middleman fee."*
 
-- [LiteLLM](https://github.com/BerriAI/litellm) <!--s:BerriAI/litellm-->⭐ 50.2k<!--/s--> — The default choice: Python SDK + proxy server speaking OpenAI format to 100+ providers, with virtual keys, budgets, load balancing and guardrails.
-- [Portkey Gateway](https://github.com/Portkey-AI/gateway) <!--s:Portkey-AI/gateway-->⭐ 12k<!--/s--> — Fast TypeScript gateway (1,600+ models, 50+ guardrails) that also powers Portkey's commercial LLMOps platform.
-- [TensorZero](https://github.com/tensorzero/tensorzero) <!--s:tensorzero/tensorzero-->⭐ 11.5k<!--/s--> — Rust gateway unified with observability, evals, experimentation and optimization — built around a data/feedback flywheel.
+- [LiteLLM](https://github.com/BerriAI/litellm) <!--s:BerriAI/litellm-->⭐ 50.3k<!--/s--> — The default choice: Python SDK + proxy server speaking OpenAI format to 100+ providers, with virtual keys, budgets, load balancing and guardrails.
+- [Portkey Gateway](https://github.com/Portkey-AI/gateway) <!--s:Portkey-AI/gateway-->⭐ 12.1k<!--/s--> — Fast TypeScript gateway (1,600+ models, 50+ guardrails) that also powers Portkey's commercial LLMOps platform.
+- [TensorZero](https://github.com/tensorzero/tensorzero) <!--s:tensorzero/tensorzero-->⭐ 11.6k<!--/s--> — Rust gateway unified with observability, evals, experimentation and optimization — built around a data/feedback flywheel.
 - [Bifrost](https://github.com/maximhq/bifrost) <!--s:maximhq/bifrost-->⭐ 5.7k<!--/s--> — Go gateway from Maxim AI claiming ~50x LiteLLM throughput; adaptive load balancing, cluster mode, MCP support.
 - [Helicone](https://github.com/Helicone/helicone) <!--s:Helicone/helicone-->⭐ 5.8k<!--/s--> — Observability-first platform (YC W23) with a Rust [ai-gateway](https://github.com/Helicone/ai-gateway) <!--s:Helicone/ai-gateway-->⭐ 601<!--/s-->.
 - [Plano](https://github.com/katanemo/plano) <!--s:katanemo/plano-->⭐ 6.6k<!--/s--> — AI-native proxy and data plane for agents (formerly Arch Gateway / archgw).
@@ -162,7 +162,7 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 - [APIPark](https://github.com/APIParkLab/APIPark) <!--s:APIParkLab/APIPark-->⭐ 1.8k<!--/s--> — Cloud-native LLM API management and distribution platform.
 - [Pydantic AI Gateway](https://github.com/pydantic/pydantic-ai-gateway) <!--s:pydantic/pydantic-ai-gateway-->⭐ 189<!--/s--> — BYOK gateway with cost caps and OTel, now folded into Pydantic Logfire.
 - [OptiLLM](https://github.com/algorithmicsuperintelligence/optillm) <!--s:algorithmicsuperintelligence/optillm-->⭐ 4.1k<!--/s--> — Optimizing inference proxy that boosts accuracy via test-time compute techniques.
-- [aisuite](https://github.com/andrewyng/aisuite) <!--s:andrewyng/aisuite-->⭐ 13.9k<!--/s--> — Andrew Ng's unified multi-provider client. A library rather than a deployable proxy — fits when you don't want network hops.
+- [aisuite](https://github.com/andrewyng/aisuite) <!--s:andrewyng/aisuite-->⭐ 14.1k<!--/s--> — Andrew Ng's unified multi-provider client. A library rather than a deployable proxy — fits when you don't want network hops.
 - ⚠️ Stale but historically notable: [BricksLLM](https://github.com/bricks-cloud/BricksLLM) <!--s:bricks-cloud/BricksLLM-->⭐ 1.2k<!--/s--> (PII masking, per-key limits; inactive since early 2025), [Glide](https://github.com/EinStack/glide) <!--s:EinStack/glide-->⭐ 160<!--/s--> (inactive since 2024).
 
 ## 🏢 Enterprise & compliance
@@ -198,7 +198,7 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 
 *Pain point: "Domestic models (Qwen/DeepSeek/GLM/Kimi), CNY payment, key distribution & billing for teams."*
 
-- [new-api](https://github.com/QuantumNous/new-api) <!--s:QuantumNous/new-api-->⭐ 38.5k<!--/s--> — The most active one-api fork, now a "unified AI model hub": protocol conversion, billing, Rerank/Realtime endpoints. AGPL-3.0.
+- [new-api](https://github.com/QuantumNous/new-api) <!--s:QuantumNous/new-api-->⭐ 38.7k<!--/s--> — The most active one-api fork, now a "unified AI model hub": protocol conversion, billing, Rerank/Realtime endpoints. AGPL-3.0.
 - [one-api](https://github.com/songquanpeng/one-api) <!--s:songquanpeng/one-api-->⭐ 34.9k<!--/s--> — The original LLM API 管理&分发系统 (OpenAI/Azure/Claude/Gemini/DeepSeek/豆包…); development has slowed.
 - [Higress](https://github.com/higress-group/higress) <!--s:higress-group/higress-->⭐ 8.6k<!--/s--> — Alibaba's AI-native gateway on Envoy/Istio, first-class 通义/DeepSeek support; hosted version at higress.ai.
 - [GPT-Load](https://github.com/tbphp/gpt-load) <!--s:tbphp/gpt-load-->⭐ 6.2k<!--/s--> — 智能密钥轮询 multi-channel proxy in Go.
@@ -227,9 +227,9 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 *Pain point: "Who spent what, on which model, and why did quality drop?"*
 
 - [Helicone](https://github.com/Helicone/helicone) <!--s:Helicone/helicone-->⭐ 5.8k<!--/s--> — Logs, costs, sessions, prompt experiments; one-line proxy integration.
-- [TensorZero](https://github.com/tensorzero/tensorzero) <!--s:tensorzero/tensorzero-->⭐ 11.5k<!--/s--> — Gateway + observability + evals in one Rust binary, data stays in your ClickHouse.
+- [TensorZero](https://github.com/tensorzero/tensorzero) <!--s:tensorzero/tensorzero-->⭐ 11.6k<!--/s--> — Gateway + observability + evals in one Rust binary, data stays in your ClickHouse.
 - [Portkey](https://portkey.ai) — Full LLMOps suite over its OSS gateway: traces, budgets, prompt management.
-- [vLLora (ex-LangDB)](https://github.com/vllora/vllora) <!--s:vllora/vllora-->⭐ 802<!--/s--> — Agent debugging and observability from the LangDB team.
+- [vLLora (ex-LangDB)](https://github.com/vllora/vllora) <!--s:vllora/vllora-->⭐ 804<!--/s--> — Agent debugging and observability from the LangDB team.
 - [Braintrust Proxy](https://github.com/braintrustdata/braintrust-proxy) <!--s:braintrustdata/braintrust-proxy-->⭐ 398<!--/s--> — Caching proxy wired into Braintrust evals.
 - [MLflow AI Gateway](https://github.com/mlflow/mlflow) <!--s:mlflow/mlflow-->⭐ 26.5k<!--/s--> — Unified endpoints + governance inside the MLflow platform.
 
@@ -248,9 +248,9 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 
 *Pain point: "Routing to self-hosted models (vLLM/Ollama) inside the cluster, GPU-aware."*
 
-- [Gateway API Inference Extension](https://github.com/kubernetes-sigs/gateway-api-inference-extension) <!--s:kubernetes-sigs/gateway-api-inference-extension-->⭐ 690<!--/s--> — The Kubernetes standard for inference-aware routing.
+- [Gateway API Inference Extension](https://github.com/kubernetes-sigs/gateway-api-inference-extension) <!--s:kubernetes-sigs/gateway-api-inference-extension-->⭐ 692<!--/s--> — The Kubernetes standard for inference-aware routing.
 - [AIBrix](https://github.com/vllm-project/aibrix) <!--s:vllm-project/aibrix-->⭐ 4.9k<!--/s--> — Cost-efficient control plane for vLLM on K8s (ByteDance-origin).
-- [llm-d](https://github.com/llm-d/llm-d) <!--s:llm-d/llm-d-->⭐ 3.3k<!--/s--> — K8s-native distributed inference serving (Red Hat/Google/IBM-backed).
+- [llm-d](https://github.com/llm-d/llm-d) <!--s:llm-d/llm-d-->⭐ 3.4k<!--/s--> — K8s-native distributed inference serving (Red Hat/Google/IBM-backed).
 - [Higress](https://github.com/higress-group/higress) <!--s:higress-group/higress-->⭐ 8.6k<!--/s--> / [Kong](https://github.com/Kong/kong) <!--s:Kong/kong-->⭐ 43.6k<!--/s--> / [Envoy AI Gateway](https://github.com/envoyproxy/ai-gateway) <!--s:envoyproxy/ai-gateway-->⭐ 1.7k<!--/s--> — all implement inference-extension-style routing.
 - [Traefik Hub AI Gateway](https://traefik.io) — LLM routing/security in Traefik's commercial runtime.
 - [Inference Gateway](https://github.com/inference-gateway/inference-gateway) <!--s:inference-gateway/inference-gateway-->⭐ 124<!--/s--> — Small cloud-native gateway unifying cloud + local (Ollama) providers.
@@ -269,18 +269,18 @@ Stars auto-refresh daily. ✅ built-in · ➕ via plugin/paid tier · ❌ not av
 ## 🚀 Recent releases (auto-updated)
 
 <!-- RELEASES:START -->
-- **2026-06-12** · [yym68686/uni-api v1.7.126](https://github.com/yym68686/uni-api/releases/tag/v1.7.126) — Release 1.7.126
+- **2026-06-14** · [yym68686/uni-api v1.7.127](https://github.com/yym68686/uni-api/releases/tag/v1.7.127) — Release 1.7.127
+- **2026-06-14** · [BerriAI/litellm v1.89.0](https://github.com/BerriAI/litellm/releases/tag/v1.89.0) — v1.89.0
+- **2026-06-13** · [QuantumNous/new-api v1.0.0-rc.11](https://github.com/QuantumNous/new-api/releases/tag/v1.0.0-rc.11) — v1.0.0-rc.11
 - **2026-06-12** · [kgateway-dev/kgateway v2.3.3](https://github.com/kgateway-dev/kgateway/releases/tag/v2.3.3) — v2.3.3
 - **2026-06-12** · [maximhq/bifrost transports/v1.5.13](https://github.com/maximhq/bifrost/releases/tag/transports/v1.5.13) — Bifrost HTTP v1.5.13
 - **2026-06-11** · [andrewyng/aisuite app-v0.1.1](https://github.com/andrewyng/aisuite/releases/tag/app-v0.1.1) — OpenCoworker 0.1.1
 - **2026-06-09** · [katanemo/plano 0.4.24](https://github.com/katanemo/plano/releases/tag/0.4.24) — 0.4.24
-- **2026-06-09** · [BerriAI/litellm v1.88.1](https://github.com/BerriAI/litellm/releases/tag/v1.88.1) — v1.88.1
 - **2026-06-06** · [envoyproxy/ai-gateway v0.7.0](https://github.com/envoyproxy/ai-gateway/releases/tag/v0.7.0) — v0.7.0
 - **2026-06-04** · [tensorzero/tensorzero 2026.6.0](https://github.com/tensorzero/tensorzero/releases/tag/2026.6.0) — 2026.6.0
 - **2026-06-04** · [Kong/kong 3.9.2](https://github.com/Kong/kong/releases/tag/3.9.2) — 3.9.2
 - **2026-06-01** · [mlflow/mlflow v3.13.0](https://github.com/mlflow/mlflow/releases/tag/v3.13.0) — v3.13.0
 - **2026-05-29** · [tbphp/gpt-load v1.4.8](https://github.com/tbphp/gpt-load/releases/tag/v1.4.8) — v1.4.8
-- **2026-05-26** · [QuantumNous/new-api v1.0.0-rc.10](https://github.com/QuantumNous/new-api/releases/tag/v1.0.0-rc.10) — v1.0.0-rc.10
 <!-- RELEASES:END -->
 
 ## Glossary
