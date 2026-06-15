@@ -78,6 +78,24 @@ Do you want to self-host?
     └─ Governing AI agents & MCP traffic ───────▶ agentgateway · Lunar.dev
 ```
 
+**⚡ Fast answer** — one sane default per need (alternatives in each linked section):
+
+| I need… | Start with | Drill into |
+|---|---|---|
+| Cheapest access to many models, zero ops | **OpenRouter** | [Cost-first](#-cost-first-cheapest-multi-model-access) |
+| Zero markup on my own keys | **Vercel** / **Cloudflare** | [Cost-first](#-cost-first-cheapest-multi-model-access) |
+| Self-host, broadest features | **LiteLLM** | [Self-hosted](#-self-hosted-open-source) |
+| Self-host, lowest overhead | **Bifrost** (Go) | [Self-hosted](#-self-hosted-open-source) |
+| China models + team key billing | **new-api** | [China ecosystem](#-china-ecosystem) |
+| Enterprise K8s + audit | **Kong** / **Higress** | [Enterprise](#-enterprise--compliance) |
+| Strongest compliance (HIPAA/FedRAMP) | **Azure** / **Bedrock** | [First-party](#️-first-party-gateways-cloud--model-vendors) |
+| Govern agents / MCP traffic | **agentgateway** | [MCP & agents](#-mcp--agent-gateways) |
+
+### ✅ Why trust this list
+- **Independent — no vendor money, no affiliate links, CC0.** Unlike affiliate-driven relay "rankings," nobody pays to appear here.
+- **Reproducible, not asserted.** Every cost cell is computed from [open pricing data](data/models.json) by a [unit-tested script](scripts/cost_calc.py); stars refresh daily via CI.
+- **Honest about risk.** We disclose CVEs, label archived/stale projects, and [exclude gray-market relays](#how-to-choose-safely) — with the research to back it.
+
 ## Quick start (drop-in)
 
 The whole promise of a gateway: **change `base_url`, keep your OpenAI code.** Same request, now with routing, fallback, caching and cost tracking.
