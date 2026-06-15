@@ -31,6 +31,25 @@
     "andrewyng/aisuite",
     "vllora/vllora",
     "braintrustdata/braintrust-proxy",
-    "pydantic/pydantic-ai-gateway"
+    "pydantic/pydantic-ai-gateway",
+    "musistudio/claude-code-router",
+    "kserve/kserve",
+    "gpustack/gpustack",
+    "pomerium/pomerium",
+    "krakend/krakend-ce",
+    "IBM/mcp-context-forge",
+    "metatool-ai/metamcp",
+    "vllm-project/semantic-router",
+    "vllm-project/production-stack",
+    "lightseekorg/smg",
+    "mcpjungle/MCPJungle",
+    "obot-platform/obot",
+    "NVIDIA-AI-Blueprints/llm-router",
+    "ulab-uiuc/LLMRouter",
+    "RelayPlane/proxy",
+    "VoAPI/VoAPI",
+    "deanxv/done-hub",
+    "lasso-security/mcp-gateway",
+    "fdmtl/director"
   ]
 }
