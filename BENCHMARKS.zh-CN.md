@@ -13,6 +13,7 @@
 - [第二部分 — 按场景选模型](#第二部分--按场景选模型)
 - [第三部分 — 真实 Token 成本实测（脚本计算）](#第三部分--真实-token-成本实测脚本计算)
 - [第四部分 — 网关四维评分：合规·价格·安全·稳定](#第四部分--网关四维评分合规价格安全稳定)
+- [第五部分 — 真实评测：生产环境里用户怎么说](#第五部分--真实评测生产环境里用户怎么说)
 - [方法论与注意事项](#方法论与注意事项)
 - [数据来源](#数据来源)
 
@@ -237,6 +238,26 @@
 | **one-api** | ★★🏠 | ★★ | ★★½ | MIT 元祖；维护放缓——new-api 是更活跃的继任者 |
 
 > ⚠️ **CVE 诚实披露。** 越流行的开源网关越是攻击目标。LiteLLM（预鉴权 SQLi + 未鉴权 RCE）和 new-api（IDOR/SSRF/SQLi）2026 年都有严重通告——*已修复*，但教训是：锁定到最新 stable、限制出站、别把管理后台暴露到公网。没发现 CVE（Bifrost、TensorZero、Higress、Envoy、GPT-Load）≠ 已证明安全，也可能只是关注度低。
+
+---
+
+## 第五部分 — 真实评测：生产环境里用户怎么说
+
+基准衡量能力；这一部分衡量**网关上了生产之后到底会炸什么**。取自事故复盘、状态页、安全研究与收购新闻——下面每个带日期的事件都链接到一手或公认来源，并公允归纳（用户称道的*和*吐槽的都写）。请配合[评分卡](#第四部分--网关四维评分合规价格安全稳定)一起看：星数衡量人气，这里衡量凌晨三点的告警。
+
+| 网关 | 被称道 | 反复出现的吐槽 | 需知晓的带日期事件 |
+|---|---|---|---|
+| **LiteLLM** | 默认 OpenAI 兼容多厂商代理；模型覆盖广度无人能及 | 高 RPS 下延迟/内存开销与劣化 | ⚠️ **PyPI 供应链投毒（2026-03）**——v1.82.7/1.82.8 在 Trivy CI 令牌被窃后被植入凭证窃取后门（TeamPCP）；PyPI 约 3 小时内隔离整个项目。请锁定到干净版本。[Trend Micro](https://www.trendmicro.com/en/research/26/c/inside-litellm-supply-chain-compromise.html) · [Datadog](https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/) |
+| **OpenRouter** | 一把 Key、一张账单接入 400+ 模型；硬性消费上限 | 规模上约 5.5% 充值费；各厂商质量/量化差异大；无公开 SLA | **约 50 分钟数据库宕机（2025-08-28）**——数据库层故障而非上游；8 个月约 99.96% 可用率，但无 SLA、不赔付。[StatusGator](https://statusgator.com/services/openrouter) |
+| **Portkey** | 真正生产级；可观测、兜底、Prompt 管理都强 | 大量"评测"是 SEO——以 G2/Gartner 为准 | **被 Palo Alto Networks 收购（2026-05 完成）**——现为 Prisma AIRS 的控制面；若你想要厂商中立的基础设施，这是中立性/路线图的疑问。[Palo Alto Networks](https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-completes-acquisition-of-portkey-to-secure-ai-agents) |
+| **Vercel AI Gateway** | 单端点、BYOK 0 加价、与 AI SDK 天生一对 | 可沉淀的独立口碑仍偏少 | **Vercel 入侵（2026-04）**——经 Context.ai 的 OAuth 供应链攻陷，泄露了部分客户的环境变量。并非网关产品本身，但关乎"是否放心把 Key 交给 Vercel"。[TechCrunch](https://techcrunch.com/2026/04/20/app-host-vercel-confirms-security-incident-says-customer-data-was-stolen-via-breach-at-context-ai/) · [Vercel](https://vercel.com/kb/bulletin/vercel-april-2026-security-incident) |
+| **Cloudflare AI Gateway** | CF 边缘上零基础设施的可观测/缓存/限流；美元消费上限 | 请求落点/路由控制有限 | 较新；独立生产评测深度仍稀薄。 |
+| **Kong AI Gateway** | 继承久经考验的数据面 + 庞大插件生态 | 开放内核：若干重要插件仅企业版（部分人转向 APISIX 求可预期的开源） | AI Gateway 较新；多数 Kong vs LiteLLM/Portkey 跑分为厂商自发布——先自行复现。 |
+| **TensorZero** | 雄心勃勃的开源 网关+可观测+优化"飞轮" | — | ⚠️ **2026 年 6 月已归档**——公司关停；Apache-2.0 代码与社区分支尚存，但请按自助维护规划。[GitHub](https://github.com/tensorzero/tensorzero) |
+| **Helicone** | 约 2 分钟上手；快速排查成本/用量与 token 上限 | 作为代理处于请求链路上（除非用异步日志，否则是单点） | **被 Mintlify 收购（2026-03），转维护模式**——安全/缺陷修复与新模型继续发布；Mintlify 协助迁移。[Mintlify](https://www.mintlify.com/blog/mintlify-acquires-helicone) · [Helicone](https://www.helicone.ai/blog/joining-mintlify) |
+| **Bifrost** | 主打 LiteLLM 的 Go 高速直替 | 独立生产证据仍偏少 | 50–90× 更低 p99 的说法属**厂商自报**——下注前请在自己的负载上复现。 |
+
+> **怎么读这张表。** 这里每一项都是*正经*项目——有真实维护者或公司，正是本清单收录的那类。我们故意摆出它们的疮疤：一个*毫无*公开批评的网关，通常只是没有公开用户。这些是时点信息且带日期；来源变动很快，签约前请自行核实。
 
 ---
 

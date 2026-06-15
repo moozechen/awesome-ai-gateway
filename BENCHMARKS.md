@@ -13,6 +13,7 @@ Every number here is **sourced and dated**. Cost cells are *computed* from a pub
 - [Part 2 — Pick a model by scenario](#part-2--pick-a-model-by-scenario)
 - [Part 3 — Real-world token cost (computed)](#part-3--real-world-token-cost-computed)
 - [Part 4 — Gateway scorecard: compliance · price · security · stability](#part-4--gateway-scorecard-compliance--price--security--stability)
+- [Part 5 — Real-world reviews: what production users report](#part-5--real-world-reviews-what-production-users-report)
 - [Methodology & caveats](#methodology--caveats)
 - [Sources](#sources)
 
@@ -239,6 +240,26 @@ This is the part buyers actually lose sleep over. Models are interchangeable; th
 > ⚠️ **CVE honesty.** Popularity makes OSS gateways targets. LiteLLM (pre-auth SQLi + unauth RCE) and new-api (IDOR/SSRF/SQLi) both had serious 2026 advisories — *patched*, but the lesson is: pin to current stable, restrict egress, and don't expose the admin panel publicly. Absence of found CVEs (Bifrost, TensorZero, Higress, Envoy, GPT-Load) ≠ proven-secure; it can mean less scrutiny.
 
 > 🏠 **Self-hosted shifts the burden to you.** LiteLLM/Bifrost/Kong score on the *controls they hand you* (RBAC, audit logs, key vaulting, on-prem) — but SOC 2 / HIPAA compliance of the *deployment* is yours to earn. That's the trade for $0 markup and full data control.
+
+---
+
+## Part 5 — Real-world reviews: what production users report
+
+Benchmarks rank capability; this ranks **what actually breaks once a gateway is in production**. Sourced from incident postmortems, status pages, security research and acquisition news — every dated event below links to a primary or recognized source, summarized fairly (what users praise *and* complain about). Read it alongside the [scorecard](#part-4--gateway-scorecard-compliance--price--security--stability): stars measure popularity; this measures the 3am pager.
+
+| Gateway | Praised for | Recurring gripe | Dated event worth knowing |
+|---|---|---|---|
+| **LiteLLM** | Default OpenAI-compatible multi-provider proxy; unmatched model breadth | Latency/memory overhead and degradation at high RPS | ⚠️ **PyPI supply-chain attack (Mar 2026)** — v1.82.7/1.82.8 were backdoored with a credential stealer after a Trivy CI-token compromise (TeamPCP); PyPI quarantined the project in ~3h. Pin to a clean release. [Trend Micro](https://www.trendmicro.com/en/research/26/c/inside-litellm-supply-chain-compromise.html) · [Datadog](https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/) |
+| **OpenRouter** | 400+ models behind one key and one bill; hard spend caps | ~5.5% credit fee at scale; provider quality/quantization varies; no public SLA | **~50-min database outage (Aug 28 2025)** — a DB-layer failure, not an upstream provider; ~99.96% uptime over 8 months, but no SLA or downtime credits. [StatusGator](https://statusgator.com/services/openrouter) |
+| **Portkey** | Genuinely production-grade; strong observability, fallbacks, prompt management | Much "review" content is SEO — weigh G2/Gartner over listicles | **Acquired by Palo Alto Networks (closed May 2026)** — now the control plane for Prisma AIRS; a neutrality/roadmap question if you want vendor-independent infra. [Palo Alto Networks](https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-completes-acquisition-of-portkey-to-secure-ai-agents) |
+| **Vercel AI Gateway** | One endpoint, 0% markup on BYOK, native to the AI SDK | Durable independent sentiment still thin | **Vercel breach (Apr 2026)** — a Context.ai OAuth supply-chain compromise exposed environment variables for a subset of customers. Not the gateway product itself, but it bears on trusting Vercel with your keys. [TechCrunch](https://techcrunch.com/2026/04/20/app-host-vercel-confirms-security-incident-says-customer-data-was-stolen-via-breach-at-context-ai/) · [Vercel](https://vercel.com/kb/bulletin/vercel-april-2026-security-incident) |
+| **Cloudflare AI Gateway** | Zero-infra observability / caching / rate-limiting on CF's edge; dollar spend limits | Limited request-placement / routing control | Newer entrant; independent production-review depth is still thin. |
+| **Kong AI Gateway** | Inherits a battle-tested data plane + broad plugin ecosystem | Open-core: several important plugins are Enterprise-only (some prefer Apache APISIX for predictable OSS) | The AI Gateway is newer; most Kong-vs-LiteLLM/Portkey benchmarks are vendor-published — reproduce before trusting. |
+| **TensorZero** | Ambitious OSS gateway + observability + optimization "flywheel" | — | ⚠️ **Archived June 2026** — company wound down; Apache-2.0 code and community forks remain, but plan for self-support, not a vendor roadmap. [GitHub](https://github.com/tensorzero/tensorzero) |
+| **Helicone** | ~2-minute onboarding; fast cost/usage and token-limit debugging | As a proxy it sits in the request path (a SPOF unless you use async logging) | **Acquired by Mintlify (Mar 2026), now maintenance mode** — security fixes, bug fixes and new models keep shipping; Mintlify supports migration. [Mintlify](https://www.mintlify.com/blog/mintlify-acquires-helicone) · [Helicone](https://www.helicone.ai/blog/joining-mintlify) |
+| **Bifrost** | Markets itself as a fast Go drop-in for LiteLLM | Independent production evidence is still thin | Its 50–90× lower-p99 claims are **vendor-reported** — reproduce on your own workload before betting on them. |
+
+> **How to read this.** Every gateway here is a *legitimate* project with a real maintainer or company — the kind this list includes. We surface their warts on purpose: a gateway with *no* public criticism usually just has no public users. These notes are point-in-time and dated; sources move fast, so verify before you sign.
 
 ---
 
