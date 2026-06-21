@@ -354,7 +354,7 @@ Built on **evidence, not hearsay.** Newer or unusually cheap relays we've *liste
 
 | Relay | Listed in | Status | Why it's here |
 |---|---|---|---|
-| [FlintAPI](https://flintapi.ai) | Cost-first | ⚠️ Unverified — vet before use | Claims Qwen2.5-72B on custom "PPU" silicon ~30% below OpenRouter; model fidelity unconfirmed. |
+| [FlintAPI](https://flintapi.ai) ([repo](https://github.com/moozechen/flintapi)) | Cost-first | ⚠️ Unverified — vet before use | Claims Qwen2.5-72B on custom "PPU" silicon ~30% below OpenRouter; model fidelity unconfirmed. |
 | [FlowBar](https://flowbarai.com) | Cost-first | ⚠️ Unverified — vet before use | Resells frontier models (GPT/Claude/Gemini) below OpenRouter with crypto/CNY payment; model fidelity unconfirmed. |
 
 *Nothing is ⛔ confirmed-problematic yet — that status needs a reproducible canary verdict or a documented incident, never hearsay.*
